@@ -66,3 +66,6 @@ For issues, feature requests, or help:
 
 All sales are final.  
 See [LICENSE](LICENSE) for more information.
+
+## 🤖 AI-Ready
+This repo adheres to the Repomix standard. Run `repomix` to pack the codebase for LLM context.
