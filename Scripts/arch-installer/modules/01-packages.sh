@@ -23,6 +23,7 @@ done
 # Show the checklist dialog
 exec 3>&1
 selection=$(dialog \
+    --separate-output \
     --backtitle "${PASTEL_TEAL}daripper os Installer${NC}" \
     --title "${PASTEL_PURPLE}Package Selection${NC}" \
     --checklist "${WHITE}Select packages to install:${NC}" \
@@ -41,8 +42,11 @@ if [ -z "$selection" ]; then
     exit
 fi
 
+# Read selection into an array
+mapfile -t selected_packages <<< "$selection"
+
 # Install the selected packages
 dialog --backtitle "${PASTEL_TEAL}daripper os Installer${NC}" --title "${PASTEL_LIGHTBLUE}Installation${NC}" --infobox "${WHITE}Installing selected packages...${NC}" 5 40
-eval "sudo pacman -S --noconfirm --needed $selection" | dialog --progressbox "${WHITE}Installing packages...${NC}" 20 70
+sudo pacman -S --noconfirm --needed "${selected_packages[@]}" | dialog --progressbox "${WHITE}Installing packages...${NC}" 20 70
 
 dialog --backtitle "${PASTEL_TEAL}daripper os Installer${NC}" --title "${PASTEL_LIGHTGREEN}Complete${NC}" --msgbox "${WHITE}Package installation complete.${NC}" 8 40

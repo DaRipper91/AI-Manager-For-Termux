@@ -26,6 +26,7 @@ done
 # Show the checklist dialog
 exec 3>&1
 selection=$(dialog \
+    --separate-output \
     --backtitle "${PASTEL_TEAL}daripper os Installer${NC}" \
     --title "${PASTEL_PURPLE}Dotfile Selection${NC}" \
     --checklist "${WHITE}Select dotfiles and directories to restore:${NC}" \
@@ -44,9 +45,11 @@ if [ -z "$selection" ]; then
     exit
 fi
 
+# Read selection into an array
+mapfile -t selected_items <<< "$selection"
+
 # Restore the selected items
-for item in $selection; do
-    item_path=$(echo "$item" | tr -d '"') # Remove quotes from selection
+for item_path in "${selected_items[@]}"; do
     source_path="$SOURCE_DIR/$item_path"
     dest_path="$DEST_DIR/$item_path"
 
