@@ -4,14 +4,16 @@ import time
 import subprocess
 import shutil
 import socket
+import getpass
 from art import AsciiArt
 from utils import Colors, clear_screen, print_color, get_input, run_command, loading_bar
 
 def draw_splash():
+    user = getpass.getuser()
     clear_screen()
     print_color(AsciiArt.EXPAC_MASTER_SPLASH, Colors.BRRED)
 
-    print_color("      [ SYSTEM IDENTITY: DaRipper ] [ ARCHITECTURE: HASWELL ]", Colors.BRBLACK)
+    print_color(f"      [ SYSTEM IDENTITY: {user} ] [ ARCHITECTURE: HASWELL ]", Colors.BRBLACK)
     print()
 
     print_color("  > INITIALIZING NEURAL LINK ", Colors.BRCYAN, end='')
@@ -23,7 +25,7 @@ def draw_splash():
 
     print_color("  > PROTOCOL: AGGRESSIVE AUDIT", Colors.BRRED)
     time.sleep(0.4)
-    print_color("  > WELCOME BACK, DaRipper.", Colors.BRRED)
+    print_color(f"  > WELCOME BACK, {user}.", Colors.BRRED)
     time.sleep(0.6)
 
 def draw_header():
@@ -34,9 +36,10 @@ def draw_footer():
     # Use hostname and uname similar to original
     hostname = socket.gethostname()
     kernel = subprocess.getoutput("uname -r")
+    user = getpass.getuser()
 
     print_color("╠══════════════════════════════════════════════════════════════╣", Colors.BRBLACK)
-    print_color(f"║  NODE: {hostname:<15}  ::  KERNEL: {kernel:<15}  ::  USER: DaRipper ║", Colors.BRBLACK)
+    print_color(f"║  NODE: {hostname:<15}  ::  KERNEL: {kernel:<15}  ::  USER: {user:<8} ║", Colors.BRBLACK)
     print_color("╚══════════════════════════════════════════════════════════════╝", Colors.BRBLACK)
 
 def main():
