@@ -99,7 +99,6 @@ def main():
     print_color("  ╚════════════════════════════════════════╝", Colors.BRYELLOW)
     print("  > Scanning .fish files for 'theme' or 'plugin' keywords...")
 
-    # grep -rnE --color=always "theme|plugin" "$target_dir" --include="*.fish" 2>/dev/null | head -n 15
     cmd = ["grep", "-rnE", "--color=always", "theme|plugin", target_dir, "--include=*.fish"]
 
     try:
@@ -139,7 +138,6 @@ def main():
     print_color("  ╚════════════════════════════════════════╝", Colors.BRYELLOW)
 
     # Look for folders named "themes" or "functions" or "conf.d"
-    # set folders (find "$target_dir" -type d \( -name "themes" -o -name "functions" -o -name "conf.d" \) 2>/dev/null | head -n 5)
 
     folders_found = []
     # We can use os.walk again but find is more direct for depth search if unlimited depth?
@@ -161,7 +159,6 @@ def main():
         print_color("  > CRITICAL INFRASTRUCTURE FOUND:", Colors.BRGREEN)
         for folder in folders_found:
             print(f"    [DIR] {folder}")
-            # List items inside briefly (ls -1 $folder | head -n 3)
             try:
                 items = os.listdir(folder)[:3]
                 for item in items:
