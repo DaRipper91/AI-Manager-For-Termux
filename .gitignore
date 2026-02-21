@@ -3,3 +3,8 @@
 repomix-context.xml
 repomix-output.json
 repomix-output.md
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
