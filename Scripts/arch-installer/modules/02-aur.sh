@@ -43,6 +43,7 @@ done
 # Show the checklist dialog
 exec 3>&1
 selection=$(dialog \
+    --separate-output \
     --backtitle "${PASTEL_TEAL}daripper os Installer${NC}" \
     --title "${PASTEL_PURPLE}AUR Package Selection${NC}" \
     --checklist "${WHITE}Select AUR packages to install:${NC}" \
@@ -61,8 +62,11 @@ if [ -z "$selection" ]; then
     exit
 fi
 
+# Read selection into an array
+mapfile -t selected_packages <<< "$selection"
+
 # Install the selected packages
 dialog --backtitle "${PASTEL_TEAL}daripper os Installer${NC}" --title "${PASTEL_LIGHTBLUE}Installation${NC}" --infobox "${WHITE}Installing selected AUR packages...${NC}" 5 40
-eval "yay -S --noconfirm --needed $selection" | dialog --progressbox "${WHITE}Installing AUR packages...${NC}" 20 70
+yay -S --noconfirm --needed "${selected_packages[@]}" | dialog --progressbox "${WHITE}Installing AUR packages...${NC}" 20 70
 
 dialog --backtitle "${PASTEL_TEAL}daripper os Installer${NC}" --title "${PASTEL_LIGHTGREEN}Complete${NC}" --msgbox "${WHITE}AUR package installation complete.${NC}" 8 40
